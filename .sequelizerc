@@ -1,0 +1,8 @@
+const { resolve } = require('path')
+
+module.expports = {
+    'config': resolve('config', 'config.js'), 
+    'models-path': resolve('models'),
+    'seeders-path': resolve('seeders'),
+    'migrations-path': resolve('migrations')
+}
