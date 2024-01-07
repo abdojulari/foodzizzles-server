@@ -8,7 +8,7 @@ yarn install
 ```
 To run the application, run the following command
 ```bash
-yarn run start
+yarn run dev
 ```
 
 ## Setting up database configuration
@@ -38,3 +38,6 @@ It needs to be specified as follows;
 npx sequelize-cli db:seed:all --config ./config/config.js --env test 
 ```
 add the `--debug` to debug the seeder
+
+# Visit the Site 
+You can visit the site at http://localhost:3000/api-docs/
