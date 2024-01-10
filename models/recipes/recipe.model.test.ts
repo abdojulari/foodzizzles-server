@@ -2,7 +2,7 @@ import { Recipe } from "./recipe.model";
 
 import { sequelize } from "../../databases/database";
 
-describe('User Model', () => {
+describe('Recipe Model', () => {
   beforeAll(async () => {
     // Recreate DB schema  
     await Recipe.sync({ force: true }); 
