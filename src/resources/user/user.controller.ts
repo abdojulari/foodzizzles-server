@@ -4,13 +4,14 @@ import HttpException from '../../utils/exceptions/http.exception';
 import validationMiddleware from '../../middlewares/validation.middleware';
 import validate from './user.validation';
 import { UserService } from './user.service';
+import jwt from 'jsonwebtoken';
 
 
 class UserController implements Controller {
     public path = '/users';
     public router = Router();
     private userService = new UserService();
-
+    
     constructor() {
         this.initializeRoutes();
     }
@@ -205,6 +206,7 @@ class UserController implements Controller {
         this.router.delete(`${this.path}/:id`, this.deleteUser);
     }
 
+   
     private getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const users = await this.userService.findAll();
@@ -214,15 +216,44 @@ class UserController implements Controller {
         }
     }
 
-    private createUser = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
+    // private createUser = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
+    //     try {
+
+    //         const user = await this.userService.create(req.body);
+    //         // try to create a new user with the same route as createUser using passportJS LocalStrategy and JWT token
+
+    //         res.status(201).json(user);
+    //     } catch (error) {
+    //         next(new HttpException(400, (error as Error).message));
+    //     }
+    // }
+
+    private createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
+
             const user = await this.userService.create(req.body);
-            res.status(201).json(user);
+    
+            // Authenticate the user after creation
+            req.login(user, { session: false }, async (err) => {
+                if (err) {
+                    return next(err);
+                }
+    
+                const secret = process.env.JWT_SECRET;
+                if (!secret) {
+                    throw new Error('JWT_SECRET is not defined');
+                }
+                // Generate JWT token
+                const token = jwt.sign({ sub: user.id, email: user.email, name: user.name }, secret); // Replace with your actual secret ke
+                
+                // Send the token in the response
+                res.status(201).json({ user, token });
+            });
         } catch (error) {
             next(new HttpException(400, (error as Error).message));
         }
     }
-
+    
     private updateUser = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
         try {
             const user = await this.userService.update(req.params.id, req.body);

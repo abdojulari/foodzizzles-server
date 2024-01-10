@@ -9,6 +9,9 @@ import swaggerSpec from '../swagger';
 import errorMiddleware from './middlewares/error.middleware';
 import Controller from 'utils/interfaces/controller.interface';
 
+// import passport from passport-config
+import passport from '../config/passport-config';
+
 class App {
     public app: Application;
     public port: number;
@@ -30,6 +33,7 @@ class App {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(compression());
+        this.app.use(passport.initialize());
     }
 
     private initializeDatabaseConnection(): void {

@@ -4,7 +4,31 @@ import * as bcrypt from 'bcrypt';
 /* create a new table called user with the following fields: 
 id, name, email, password, createdAt, updatedAt
 */
-export class User extends Model {}
+
+interface UserAttributes {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export class User extends Model<UserAttributes> implements UserAttributes {
+    public id!: number;
+    public name!: string;
+    public email!: string;
+    public password!: string;
+    public createdAt!: Date;
+    public updatedAt!: Date;
+
+    // Other methods or hooks can be added here
+
+    // Hash the password before saving to the database
+    public setPassword(value: string): void {
+        this.password = bcrypt.hashSync(value, 10);
+    }
+}
 
 User.init({
     id: {

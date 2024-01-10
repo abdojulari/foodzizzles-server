@@ -13,7 +13,10 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    apis: ["./src/resources/user/user.controller.ts"],
+    apis: [
+            "./src/resources/user/user.controller.ts",
+            "./src/resources/login/login.controller.ts",
+        ],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

@@ -3,11 +3,16 @@ import 'module-alias/register';
 import validateEnv from './utils/validateEnv';
 import App from './app';
 import UserController from './resources/user/user.controller';
-import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from '../swagger';
+import LoginController from './resources/login/login.controller';
+
 
 validateEnv();
-const app = new App([new UserController], Number(process.env.PORT));
+const app = new App(
+    [
+        new LoginController,
+        new UserController
+    ],
+    Number(process.env.PORT));
 // swagger 
 app.swagger();
 

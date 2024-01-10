@@ -18,10 +18,11 @@ describe('User Model', () => {
     // hash the password using bcrypt
     const password = 'password123';
     const user = await User.create({
+      id: 1,
       name: 'John Tola',
       email: 'johndoe@example.com',
       password: bcrypt.hashSync(password, 10),
-      createAt: new Date(),
+      createdAt: new Date(),
       updatedAt: new Date()
     });
 
@@ -33,10 +34,11 @@ describe('User Model', () => {
   it('should not hash the password if it is already hashed', async () => {
       const password = 'password123';
       const user = await User.create({
+        id: 1,
         name: 'John Travis',
         email: 'john.travis@example.com',
         password: bcrypt.hashSync(password, 10),
-        createAt: new Date(),
+        createdAt: new Date(),
         updatedAt: new Date()
       });
 
