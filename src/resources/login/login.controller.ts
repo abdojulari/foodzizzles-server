@@ -86,7 +86,7 @@ class LoginController implements Controller {
                 if (!secret) {
                     throw new Error('JWT_SECRET is not defined');
                 }
-                const token = jwt.sign({ sub: user.id }, secret);
+                const token = jwt.sign({ sub: user.id, email: user.email, name: user.name}, secret);
                 return res.json({ user, token });
             });
         })(req, res, next);
