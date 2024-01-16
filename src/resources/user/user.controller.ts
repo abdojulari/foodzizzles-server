@@ -10,7 +10,7 @@ import jwt from 'jsonwebtoken';
 class UserController implements Controller {
     public path = '/users';
     public router = Router();
-    private userService = new UserService();
+    public userService = new UserService();
     
     constructor() {
         this.initializeRoutes();
@@ -38,7 +38,7 @@ class UserController implements Controller {
      * 
      */
     
-    private initializeRoutes(): void {
+    public initializeRoutes(): void {
         /**
          * @swagger
          * /api/users/{id}:
@@ -207,7 +207,7 @@ class UserController implements Controller {
     }
 
    
-    private getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const users = await this.userService.findAll();
             res.status(200).json(users);
@@ -216,19 +216,7 @@ class UserController implements Controller {
         }
     }
 
-    // private createUser = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
-    //     try {
-
-    //         const user = await this.userService.create(req.body);
-    //         // try to create a new user with the same route as createUser using passportJS LocalStrategy and JWT token
-
-    //         res.status(201).json(user);
-    //     } catch (error) {
-    //         next(new HttpException(400, (error as Error).message));
-    //     }
-    // }
-
-    private createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
 
             const user = await this.userService.create(req.body);
@@ -254,7 +242,7 @@ class UserController implements Controller {
         }
     }
     
-    private updateUser = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
+    public updateUser = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
         try {
             const user = await this.userService.update(req.params.id, req.body);
             res.status(200).json(user);
@@ -263,7 +251,7 @@ class UserController implements Controller {
         }
     }
 
-    private deleteUser = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
+    public deleteUser = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
         try {
             const user = await this.userService.delete(Number(req.params.id));
             res.status(200).json(user);
@@ -272,7 +260,7 @@ class UserController implements Controller {
         }
     }
 
-    private getUser =  async (req: Request, res: Response, next: NextFunction): Promise< Response | void>  => {
+    public getUser =  async (req: Request, res: Response, next: NextFunction): Promise< Response | void>  => {
         try {
             const user = await this.userService.findById(Number(req.params.id));
             res.status(200).json(user);

@@ -9,7 +9,7 @@ import { RecipeService } from './recipe.service';
 class RecipeController implements Controller {
     public path = '/recipes';
     public router = Router();
-    private recipeService = new RecipeService();
+    public recipeService = new RecipeService();
 
     constructor() {
         this.initializeRoutes();
@@ -52,7 +52,7 @@ class RecipeController implements Controller {
      *              description: the url featured image of the recipes
      *              example: (binary data)                
      */
-    private initializeRoutes(): void { 
+    public initializeRoutes(): void { 
 
         /**
          * @swagger
@@ -205,7 +205,7 @@ class RecipeController implements Controller {
 
     }
 
-    private getAllRecipes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public getAllRecipes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const recipes = await this.recipeService.findAll();
             res.status(200).json(recipes);
@@ -215,7 +215,7 @@ class RecipeController implements Controller {
     }
 
 
-    private createRecipeWithImage = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+    public createRecipeWithImage = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         try {
             const { name, description, duration, category, cuisine, date } = req.body;
             const recipe = await this.recipeService.createWithImage({
@@ -234,7 +234,7 @@ class RecipeController implements Controller {
         }
     }
 
-    private updateRecipeWithImage = async (req: any, res: Response, next: NextFunction): Promise<void> => {
+    public updateRecipeWithImage = async (req: any, res: Response, next: NextFunction): Promise<void> => {
         try {
             const { name, description, duration, category, cuisine, date } = req.body;
 
@@ -258,7 +258,7 @@ class RecipeController implements Controller {
         }
     }
 
-    private deleteRecipe = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
+    public deleteRecipe = async (req: Request, res: Response, next: NextFunction): Promise< Response | void> => {
         try {
             const recipe = await this.recipeService.delete(Number(req.params.id));
             res.status(200).json(recipe);
@@ -267,7 +267,7 @@ class RecipeController implements Controller {
         }
     }
 
-    private getRecipe =  async (req: Request, res: Response, next: NextFunction): Promise< Response | void>  => {
+    public getRecipe =  async (req: Request, res: Response, next: NextFunction): Promise< Response | void>  => {
         try {
             const recipe = await this.recipeService.findById(Number(req.params.id));
             res.status(200).json(recipe);
