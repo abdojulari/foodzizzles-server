@@ -3,6 +3,12 @@ import { User } from '../../../models/user/user.model';
 export class UserService {
     private user = User;
     public async create(user: any): Promise<User> {
+        // check if the user already exists
+        const userExists = await this.findByEmail(user.email);
+        if (userExists) {
+            throw new Error('User already exists');
+        }
+        // create the user
         const users =  await this.user.create(user);
         return users;
     }

@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@types/jest": "^29.5.4",
+    "@types/multer": "^1.4.11",
     "@types/passport-facebook": "^3.0.3",
     "@types/passport-google-oauth": "^1.0.45",
     "@types/passport-jwt": "^4.0.0",
@@ -53,6 +54,7 @@
     "json-web-token": "^3.2.0",
     "module-alias": "^2.2.3",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1",
     "passport": "^0.7.0",
     "passport-facebook": "^3.0.0",

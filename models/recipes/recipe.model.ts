@@ -4,7 +4,7 @@ import { sequelize } from "../../databases/database";
 id, name, description, image, cuisine, category, date, createdAt, updatedAt
 */
 
-interface RecipeAttributes {
+export interface RecipeAttributes {
     id: number;
     name: string;
     description: string;
@@ -28,6 +28,9 @@ export class Recipe extends Model<RecipeAttributes> implements RecipeAttributes 
     public date!: Date | string;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
+
+    // create relationships with AdditionalDetail
+
 
 }
 

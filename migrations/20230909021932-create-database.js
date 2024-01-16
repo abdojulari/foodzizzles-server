@@ -11,7 +11,7 @@ module.exports = {
      */
 
       // check if database exists
-      const dbName = sequelize.config.database;
+      const dbName = Sequelize.db;
       const db = await queryInterface.sequelize.query(
         `SELECT datname FROM pg_catalog.pg_database WHERE lower(datname) = lower('${dbName}');`
       );

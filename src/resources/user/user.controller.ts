@@ -244,7 +244,7 @@ class UserController implements Controller {
                     throw new Error('JWT_SECRET is not defined');
                 }
                 // Generate JWT token
-                const token = jwt.sign({ sub: user.id, email: user.email, name: user.name }, secret); 
+                const token = jwt.sign({ sub: user.id, email: user.email, name: user.name }, secret, { expiresIn: '1h'}); 
                 
                 // Send the token in the response
                 res.status(201).json({ user, token });
