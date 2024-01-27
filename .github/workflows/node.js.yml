@@ -22,7 +22,7 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: shopping
           POSTGRES_NAME: shopping-cart-test
           POSTGRES_USER: postgres
         # Set health checks to wait until postgres has started
@@ -65,6 +65,8 @@ jobs:
         POSTGRES_HOST: localhost
         # The default PostgreSQL port
         POSTGRES_PORT: 5432
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: shopping
     
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
