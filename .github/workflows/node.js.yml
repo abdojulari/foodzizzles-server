@@ -1,0 +1,77 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    # Service containers to run with `runner-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_NAME: shopping-cart-test
+          POSTGRES_USER: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Debug Connection Details
+      run: |
+        echo "DB_HOST: ${{ env.POSTGRES_HOST }}"
+        echo "DB_PORT: ${{ env.POSTGRES_PORT }}"
+        echo "DB_NAME: ${{ env.POSTGRES_DB }}"
+        echo "DB_USER: ${{ env.POSTGRES_USER }}"
+        echo "DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}"
+    
+    - uses: actions/checkout@v3
+    - name: Install Dependencies
+      run: yarn install
+
+    - name: Connect to PostgreSQL
+      # Runs a script that creates a PostgreSQL table, populates
+      # the table with data, and then retrieves the data
+      run: | 
+        node config/config.js
+      # Environment variables used by the `client.js` script to create
+      # a new PostgreSQL table.
+      env:
+        # The hostname used to communicate with the PostgreSQL service container
+        POSTGRES_HOST: localhost
+        # The default PostgreSQL port
+        POSTGRES_PORT: 5432
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: yarn run build
+    - run: cp config/config.js dist/config/
+    - run: yarn test
