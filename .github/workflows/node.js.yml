@@ -41,6 +41,9 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - name: Wait for PostgreSQL to be ready
+      run: sleep 10s
+      
     - name: Debug Connection Details
       run: |
         echo "DB_HOST: ${{ env.POSTGRES_HOST }}"
