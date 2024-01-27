@@ -41,21 +41,7 @@ jobs:
         node-version: [20.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-    steps:
-    - name: Wait for PostgreSQL to be ready
-      run: sleep 10s
-
-    - name: display user informationon postgres
-      run: \du
-
-    - name: Debug Connection Details
-      run: |
-        echo "POSTGRES_HOST: ${{ job.services.postgres.options.host }}"
-        echo "POSTGRES_PORT: ${{ job.services.postgres.options.port }}"
-        echo "DB_DB: ${{ env.POSTGRES_DB }}"
-        echo "DB_USER: ${{ env.POSTGRES_USER }}"
-        echo "DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}"
-    
+    steps: 
     - uses: actions/checkout@v3
     - name: Install Dependencies
       run: yarn install
