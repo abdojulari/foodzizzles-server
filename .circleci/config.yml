@@ -1,0 +1,27 @@
+# CircleCI configuration file
+
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:latest
+    services:
+      - circleci/postgres:latest
+    environment:
+      POSTGRES_DB: shopping-cart-test
+      POSTGRES_USER: progress
+      POSTGRES_PASSWORD: shopping
+      POSTGRES_HOST: 127.0.0.1
+
+    steps:
+      - checkout
+      # Add steps for setting up dependencies, running migrations, and running tests
+      - run: yarn install
+      - run: yarn run test
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - build

@@ -2,6 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
+
 import { UserService } from '../src/resources/user/user.service';
 import bcrypt from 'bcrypt';
 
@@ -31,11 +32,11 @@ async (email, password, done) => {
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET,
+    secretOrKey: process.env.JWT_SECRET!,
 };
 
 passport.use(
-    new JwtStrategy(jwtOptions, async (payload, done) => {
+    new JwtStrategy(jwtOptions, async (payload: any, done: any) => {
       try {
         const user = await userService.findById(payload.sub);
   

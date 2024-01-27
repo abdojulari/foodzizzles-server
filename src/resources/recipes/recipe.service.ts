@@ -16,6 +16,11 @@ export class RecipeService {
         }
     });
 
+    constructor() {
+        // Initialize multer here
+        this.upload = multer({ storage: this.storage });
+    }
+
     public upload = multer({ storage: this.storage });
 
     public async createWithImage(data: any): Promise<Recipe> {

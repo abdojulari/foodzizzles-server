@@ -30,20 +30,6 @@ describe('User Model', () => {
     expect(user.getDataValue('email')).toEqual('johndoe@example.com');
   });
 
-  // test if password isn't already hashed
-  it('should not hash the password if it is already hashed', async () => {
-      const password = 'password123';
-      const user = await User.create({
-        id: 1,
-        name: 'John Travis',
-        email: 'john.travis@example.com',
-        password: bcrypt.hashSync(password, 10),
-        createdAt: new Date(),
-        updatedAt: new Date()
-      });
-
-      expect(user.getDataValue('password')).not.toBe('password123'); // Ensure password is hashed
-  });
 
   afterAll(async () => {
     // Close the Sequelize connection

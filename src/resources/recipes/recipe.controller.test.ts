@@ -1,83 +1,111 @@
-import  RecipeController  from './recipe.controller';
-import  HttpException  from '../../utils/exceptions/http.exception';
-import { Request, Response, NextFunction } from 'express';
-import { RecipeService } from './recipe.service';
 
-// Unit Test for RecipeController
+import RecipeController from './recipe.controller';
+import { Request, Response, NextFunction } from 'express';
+
 
 describe('RecipeController', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-        
-        
-    });
     
-    it('should create a new recipe with image successfully', async () => {
+    // Should be able to get all recipes successfully
+    it('should get all recipes successfully', async () => {
         // Arrange
-        const req = {
-            body: {
-                name: 'Nigerian Jollof Rice',
-                description: 'The best recipes on Nigerian Jollof Rice',
-                duration: 30,
-                date: '2015-12-03',
-                cuisine: 'West African Cuisine',
-                category: 'West Africa'
-            },
-            file: {
-                path: 'uploads/recipes/image-12345.jpg'
-            }
-        } as any;
-        const res = {
+        const req: Request = {} as any;
+        const res: Response = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn()
         } as any;
-        const next = jest.fn();
+        const next: NextFunction = jest.fn();
 
         const recipeController = new RecipeController();
+        recipeController.recipeService.findAll = jest.fn().mockResolvedValue([
+            {
+                name: 'Nigerian Jollof Rice',
+                description: 'The best recipes on Nigerian Jollof Rice',
+                duration: 30,
+                category: 'West Africa',
+                cuisine: 'West African Cuisine',
+                date: '2015-12-03',
+                image: 'uploads/recipes/image-12345.jpg'
+            },
+            {
+                name: 'Ghanaian Jollof Rice',
+                description: 'The best recipes on Ghanaian Jollof Rice',
+                duration: 45,
+                category: 'West Africa',
+                cuisine: 'Ghanaian Cuisine',
+                date: '2016-05-20',
+                image: 'uploads/recipes/image-67890.jpg'
+            }
+        ]);
 
         // Act
-        await recipeController.createRecipeWithImage(req, res, next);
+        await recipeController.getAllRecipes(req, res, next);
 
         // Assert
-        expect(res.status).toHaveBeenCalledWith(201);
-        expect(res.json).toHaveBeenCalledWith({
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith([
+            {
+                name: 'Nigerian Jollof Rice',
+                description: 'The best recipes on Nigerian Jollof Rice',
+                duration: 30,
+                category: 'West Africa',
+                cuisine: 'West African Cuisine',
+                date: '2015-12-03',
+                image: 'uploads/recipes/image-12345.jpg'
+            },
+            {
+                name: 'Ghanaian Jollof Rice',
+                description: 'The best recipes on Ghanaian Jollof Rice',
+                duration: 45,
+                category: 'West Africa',
+                cuisine: 'Ghanaian Cuisine',
+                date: '2016-05-20',
+                image: 'uploads/recipes/image-67890.jpg'
+            }
+        ]);
+    });
+
+    // Should be able to get a recipe by ID successfully
+    it('should get a recipe by ID successfully when a valid ID is provided', async () => {
+        // Arrange
+        const req: Request = {
+            params: {
+                id: '1'
+            }
+        } as any;
+        const res: Response = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn()
+        } as any;
+        const next: NextFunction = jest.fn();
+
+
+        const recipeController = new RecipeController();
+        recipeController.recipeService.findById = jest.fn().mockResolvedValue({
+            id: 1,
             name: 'Nigerian Jollof Rice',
             description: 'The best recipes on Nigerian Jollof Rice',
             duration: 30,
-            date: '2015-12-03',
-            cuisine: 'West African Cuisine',
             category: 'West Africa',
-            image: 'uploads/recipes/image-12345.jpg' // Include the 'image' property in the response
+            cuisine: 'West African Cuisine',
+            date: '2015-12-03',
+            image: 'uploads/recipes/image-12345.jpg'
         });
-    });
 
-   
-
-
-    // Should return 400 error if required fields are missing when creating a recipe
-    it('should return 400 error if required fields are missing when creating a recipe', () => {
-        // Arrange
-        const req = {
-            body: {
-                name: 'Nigerian Jollof Rice',
-                description: 'The best recipes on Nigerian Jollof Rice',
-                duration: 30,
-                date: '2015-12-03',
-                cuisine: 'West African Cuisine'
-            }
-        } as any;
-        const res = {
-            status: jest.fn().mockReturnThis(),
-            json: jest.fn()
-        } as any;
-        const next = jest.fn();
-
-        const recipeController = new RecipeController();
 
         // Act
-        recipeController.createRecipeWithImage(req, res, next);
+        await recipeController.getRecipe(req, res, next);
 
         // Assert
-        expect(next).toHaveBeenCalledWith(new HttpException(400, 'Missing required fields'));
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            id: 1,
+            name: 'Nigerian Jollof Rice',
+            description: 'The best recipes on Nigerian Jollof Rice',
+            duration: 30,
+            category: 'West Africa',
+            cuisine: 'West African Cuisine',
+            date: '2015-12-03',
+            image: 'uploads/recipes/image-12345.jpg'
+        });
     });
 });

@@ -1,4 +1,4 @@
-import HttpException from "utils/exceptions/http.exception";
+import HttpException from '../../utils/exceptions/http.exception';
 import UserController from "./user.controller";
 import { Request, Response, NextFunction } from 'express';
 

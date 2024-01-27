@@ -24,7 +24,7 @@ describe('Recipe Model', () => {
       duration: 2,
       cuisine: 'West African',
       category: 'African',
-      date: new Date(),
+      date: new Date('2022-01-01').toString(),
       createdAt: new Date(),
       updatedAt: new Date()
     });
