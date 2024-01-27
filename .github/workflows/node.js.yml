@@ -25,6 +25,7 @@ jobs:
           POSTGRES_PASSWORD: shopping
           POSTGRES_NAME: shopping-cart-test
           POSTGRES_USER: postgres
+          
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -43,7 +44,10 @@ jobs:
     steps:
     - name: Wait for PostgreSQL to be ready
       run: sleep 10s
-      
+
+    - name: display user informationon postgres
+      run: \du
+
     - name: Debug Connection Details
       run: |
         echo "DB_HOST: ${{ env.POSTGRES_HOST }}"
