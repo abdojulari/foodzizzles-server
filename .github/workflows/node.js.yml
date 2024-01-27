@@ -23,7 +23,7 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: shopping
-          POSTGRES_NAME: shopping-cart-test
+          POSTGRES_DB: shopping-cart-test
           POSTGRES_USER: postgres
           
         # Set health checks to wait until postgres has started
@@ -50,9 +50,9 @@ jobs:
 
     - name: Debug Connection Details
       run: |
-        echo "DB_HOST: ${{ env.POSTGRES_HOST }}"
-        echo "DB_PORT: ${{ env.POSTGRES_PORT }}"
-        echo "DB_NAME: ${{ env.POSTGRES_DB }}"
+        echo "POSTGRES_HOST: ${{ job.services.postgres.options.host }}"
+        echo "POSTGRES_PORT: ${{ job.services.postgres.options.port }}"
+        echo "DB_DB: ${{ env.POSTGRES_DB }}"
         echo "DB_USER: ${{ env.POSTGRES_USER }}"
         echo "DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}"
     
