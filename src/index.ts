@@ -14,7 +14,7 @@ const app = new App(
         new UserController,
         new RecipeController
     ],
-    Number(process.env.PORT));
+    Number(process.env.POSTGRES_PORT));
 // swagger 
 app.swagger();
 

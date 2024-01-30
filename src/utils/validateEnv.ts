@@ -5,11 +5,11 @@ function validateEnv(): void {
         NODE_ENV: str({ 
             choices: ['development', 'test', 'production'] 
         }),
-        PORT: port({ default: 3000}),
-        DB_NAME: str(),
-        DB_USERNAME: str(),
-        DB_PASSWORD: str(),
-        DB_HOST: str(),
+        POSTGRES_PORT: port({ default: 3000}),
+        POSTGRES_DB: str(),
+        POSTGRES_USER: str(),
+        POSTGRES_PASSWORD: str(),
+        POSTGRES_HOST: str(),
     })
 }
 

@@ -20,7 +20,7 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src/**/*", "**/*.test.ts", "**/*.spec.ts"
+    "src/**/*", "**/*.test.ts", "**/*.spec.ts", "tests/**/*"
   ],
   "exclude": [
     "node_modules"

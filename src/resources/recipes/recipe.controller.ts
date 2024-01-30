@@ -89,7 +89,6 @@ class RecipeController implements Controller {
         this.router.post(
             `${this.path}`, 
             this.recipeService.upload.single('image'),
-            validationMiddleware(validate.create), 
             this.createRecipeWithImage
         );
 
@@ -170,8 +169,7 @@ class RecipeController implements Controller {
         this.router.put(
             `${this.path}/:id`, 
             this.recipeService.upload.single('image'),
-           validationMiddleware, 
-           this.updateRecipeWithImage
+            this.updateRecipeWithImage
         );
 
         /**

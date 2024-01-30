@@ -3,27 +3,29 @@ import compression  from 'compression';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
+import https from 'https';
 import { connection } from '../databases/connection';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from '../swagger';
 import errorMiddleware from './middlewares/error.middleware';
 import Controller from 'utils/interfaces/controller.interface';
-
 // import passport from passport-config
 import passport from '../config/passport-config';
 
 class App {
     public app: Application;
     public port: number;
+    private server: https.Server | null = null;
     
     constructor(controllers: Controller[], port: number) {
         this.app = express();
         this.port = port;
-
         this.initializeMiddleware();
         this.initializeDatabaseConnection();
         this.initializeController(controllers);
         this.errorhandler();
+
+        this.server = https.createServer(this.app);
     }
 
     private initializeMiddleware(): void {
@@ -111,9 +113,14 @@ class App {
     }
 
     public listen(): void {
-        this.app.listen(this.port, () => {
-            console.log(`App listening at http://localhost:${this.port}`);
-        });
+        if (this.server) {
+            this.app.listen(this.port, () => {
+                console.log(`App listening at http://localhost:${this.port}`);
+            });
+        } else {
+            console.error('Server instance is null. App is not started!');
+        }
+        
     }
 }
 
