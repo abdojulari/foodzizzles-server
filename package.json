@@ -30,7 +30,7 @@
     "start": "node dist/index.js",
     "build": "tsc -p . && cp config/config.js dist/config/",
     "postinstall": "yarn run build",
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "generate-swagger": "ts-node ./swagger.ts",
     "lint": "eslint . --fix"
   },
