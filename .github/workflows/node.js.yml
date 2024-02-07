@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "telemetry" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "telemetry" ]
 
 jobs:
   build:
@@ -44,7 +44,7 @@ jobs:
     steps: 
     - uses: actions/checkout@v3
     - name: Install Dependencies
-      run: yarn install
+      run: yarn install && npm install
 
     - name: Connect to PostgreSQL
       # Runs a script that creates a PostgreSQL table, populates

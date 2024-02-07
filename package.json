@@ -26,7 +26,7 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "dev": "ts-node-dev --require ./instrumentation.ts --respawn --transpile-only ./src/index.ts",
     "start": "node dist/index.js",
     "build": "tsc -p .",
     "postinstall": "yarn run build",
@@ -35,6 +35,11 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.7.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.41.1",
+    "@opentelemetry/sdk-metrics": "^1.21.0",
+    "@opentelemetry/sdk-node": "^0.48.0",
+    "@opentelemetry/sdk-trace-node": "^1.21.0",
     "@types/multer": "^1.4.11",
     "@types/passport-facebook": "^3.0.3",
     "@types/passport-google-oauth": "^1.0.45",
