@@ -68,5 +68,4 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: yarn run build
-    - run: cp config/config.js dist/config/
     - run: yarn test
