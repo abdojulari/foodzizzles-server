@@ -68,6 +68,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - run: rm -rf dist
     - run: yarn run build
     - run: cp config/config.js dist/config/
     #- run: npx sequelize-cli db:seed:all --config ./config/config.js --env test

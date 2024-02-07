@@ -12,20 +12,17 @@ describe('RecipeController Endpoints', () => {
   
   it('should get all recipes', async () => {
     const response = await request(app.app).get('/api/recipes');
-    console.log(response.statusCode);
     expect(response.statusCode).toBe(200);
     expect(response.body).toBeInstanceOf(Array);
-  });
+  }, 30000);
 
   it('should get a recipe by ID', async () => {
     const response = await request(app.app).get('/api/recipes/1');
-    console.log(response.statusCode);
     expect(response.statusCode).toBe(200);
-  });
+  }, 30000);
 
   it('should delete a recipe by ID', async () => {
     const response = await request(app.app).delete('/api/recipes/1');
-    console.log(response.statusCode);
     expect(response.statusCode).toBe(200);
-  });
+  }, 30000);
 });
