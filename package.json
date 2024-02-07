@@ -28,9 +28,9 @@
   "scripts": {
     "dev": "ts-node-dev --require ./instrumentation.ts --respawn --transpile-only ./src/index.ts",
     "start": "node dist/index.js",
-    "build": "tsc -p . && cp config/config.js dist/config/",
+    "build": "tsc -p .",
     "postinstall": "yarn run build",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "generate-swagger": "ts-node ./swagger.ts",
     "lint": "eslint . --fix"
   },
