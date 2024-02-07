@@ -70,5 +70,5 @@ jobs:
     - run: npm ci
     - run: yarn run build
     - run: cp config/config.js dist/config/
-    - run: npx sequelize-cli db:seed:all --config ./config/config.js
+    - run: npx sequelize-cli db:seed:all --config ./config/config.js --env test
     - run: yarn test
