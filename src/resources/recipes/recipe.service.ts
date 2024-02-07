@@ -1,6 +1,5 @@
 import { Recipe, RecipeAttributes } from '../../../models/recipes/recipe.model';
 import  multer  from 'multer';
-import path from 'path';
 
 export class RecipeService {
     private recipe = Recipe;
@@ -10,16 +9,10 @@ export class RecipeService {
             cb(null, 'uploads/recipes');
         },
         filename: function (req, file, cb) {
-            cb(null, file.fieldname
-                + '-' + Date.now()
-                + path.extname(file.originalname));
+            cb(null, file.originalname); 
         }
     });
 
-    constructor() {
-        // Initialize multer here
-        this.upload = multer({ storage: this.storage });
-    }
 
     public upload = multer({ storage: this.storage });
 

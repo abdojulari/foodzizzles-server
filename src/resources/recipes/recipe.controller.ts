@@ -1,8 +1,6 @@
 import { Router, Request, Response, NextFunction} from 'express';
 import Controller from '../../utils/interfaces/controller.interface';
 import HttpException from '../../utils/exceptions/http.exception';
-import validationMiddleware from '../../middlewares/validation.middleware';
-import validate from './recipe.validation';
 import { RecipeService } from './recipe.service';
 
 
@@ -33,7 +31,7 @@ class RecipeController implements Controller {
      *          duration:
      *              type: integer
      *              description: read time of recipe
-     *              example: 6 minute read
+     *              example: 6
      *          category:
      *              type: string
      *              description: categorizing the recipes based on the continent or country
